@@ -1,6 +1,7 @@
 import os
 import json
 
+
 class JsonManager:
     def __init__(self, file_name):
         self.file_name = file_name
@@ -23,7 +24,7 @@ class JsonManager:
         all_data.append(data)
         self.write(all_data)
         return "Data added successfully"
-    
+
     def update_data(self, identifier, key, new_data):
         all_data = self.read()
         updated = False
@@ -42,12 +43,13 @@ class JsonManager:
     def delete_data(self, identifier, key):
         all_data = self.read()
         updated_data = []
-        
+
         for item in all_data:
             if item[key] != identifier:
                 updated_data.append(item)
-                
+
         self.write(updated_data)
         return len(updated_data) < len(all_data)
+
 
 user_manager = JsonManager("users.json")

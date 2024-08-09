@@ -1,7 +1,8 @@
 from file_manager import JsonManager
 
+
 class User(JsonManager):
-    
+
     def __init__(self, user_name, email, file_name="users.json"):
         super().__init__(file_name)
         self.user_name = user_name
