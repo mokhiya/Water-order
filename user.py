@@ -7,6 +7,7 @@ class User(JsonManager):
         self.user_name = user_name
         self.email = email
         self.orders = []
+        self.my_balance = 0
         self.login = False
 
     def add_order(self, order):
@@ -21,3 +22,16 @@ class User(JsonManager):
             'login': self.login,
             'orders': self.orders
         }
+
+    def add_balance(self, count, price):
+        total = count * price
+        print(f"Total price:  {total}")
+        answer = input("Do you add balance?  (Y or N)\n")
+        if answer == 'Y':
+            self.my_balance += count
+
+    def create_order(self, count):
+        if count <= self.my_balance:
+            self.my_balance -= count
+        else:
+            print("Your balance insufficient.")
