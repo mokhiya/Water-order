@@ -7,6 +7,7 @@ class User(JsonManager):
         self.user_name = user_name
         self.email = email
         self.orders = []
+        self.my_balance = 0
         self.login = False
 
     def add_order(self, order):
@@ -21,3 +22,10 @@ class User(JsonManager):
             'login': self.login,
             'orders': self.orders
         }
+
+    def add_balance(self, count, price):
+        total = count * price
+        print(f"Total price:  {total}")
+        answer = input("Do you wont to add balance?  (Yes or No):  ")
+        if answer == "Yes":
+            self.my_balance += count
