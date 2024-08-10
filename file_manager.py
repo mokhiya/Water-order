@@ -61,4 +61,5 @@ class JsonManager:
 
 
 user_manager = JsonManager("users.json")
-order_manager = JsonManager('orders.json')
+order_manager = JsonManager("orders.json")
+admin_manager = JsonManager("admin_data.json")

@@ -1,6 +1,9 @@
 from user import User
 from file_manager import user_manager
 
+admin_username = "admin"
+admin_password = "0000"
+
 
 def register_user():
     """
@@ -17,7 +20,6 @@ def register_user():
 
     user = User(user_name=user_name, email=user_email)
     user.add_data(user.formatting_data())
-    print("Successfully registered!")
     return True
 
 
@@ -27,20 +29,11 @@ def check_user(username, email):
         if user['user_name'] == username and user['email'] == email:
             user['login'] = True
             user_manager.write_data(all_users)
-            print("Successfully logged in!")
             return True
     return False
 
 
-admin_login = "admin"
-admin_password = "0000"
-
-
-def check_admin(login, password):
-    if login == admin_login and password == admin_password:
-        #show_admin_menu()
+def check_admin(username, password):
+    if username == admin_username and password == admin_password:
         return True
-    print("System cannot detect you, please try later or contact admin")
     return False
-
-
