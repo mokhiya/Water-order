@@ -1,5 +1,13 @@
 import os
 import json
+from contextlib import contextmanager
+
+@contextmanager
+def custom_open(file_name, mode):
+    file = open(file_name, mode)
+    yield file
+    file.close()
+
 
 
 class JsonManager:
@@ -11,12 +19,12 @@ class JsonManager:
 
     def read_data(self):
         if self._file_exists_and_not_empty():
-            with open(self.file_name, 'r') as file:
+            with custom_open(self.file_name, 'r') as file:
                 return json.load(file)
         return []
 
     def write_data(self, data):
-        with open(self.file_name, 'w') as file:
+        with custom_open(self.file_name, 'w') as file:
             json.dump(data, file, indent=4)
 
     def add_data(self, data: dict):
@@ -53,3 +61,4 @@ class JsonManager:
 
 
 user_manager = JsonManager("users.json")
+order_manager = JsonManager('orders.json')
