@@ -1,6 +1,7 @@
 from file_manager import JsonManager, admin_manager, order_manager
 
 
+
 def see_all_users():
     user_manager = JsonManager("users.json")
     users = user_manager.read_data()
@@ -11,8 +12,11 @@ def see_all_users():
         print("\nList of all registered users:")
         print("{:<20} {:<30}".format("Ism", "Email"))
         print("-" * 50)
+        print("{:<20} {:<30}".format("Ism", "Email"))
+        print("-" * 50)
         for user in users:
             print("{:<20} {:<30}".format(user['user_name'], user['email']))
+
 
 
 def print_package():
