@@ -4,8 +4,8 @@ from file_manager import user_manager, order_manager, admin_manager
 
 class User:
 
-    def __init__(self, user_name, email):
-        self.user_name = user_name
+    def __init__(self, username, email):
+        self.username = username
         self.email = email
         self.my_balance = 0
         self.login = False
@@ -13,7 +13,7 @@ class User:
     def formatting_data(self):
         """This method is used to format input data in dict format"""
         return {
-            'user_name': self.user_name,
+            'username': self.username,
             'email': self.email,
             'login': self.login,
             'balance': self.my_balance
@@ -32,15 +32,23 @@ class User:
             self.my_balance -= count
             return True
         else:
-            return False
+            diff = count - self.my_balance
+            print(f"You need to add {diff} water to your balance.")
+            answer = input("Do you want to add?  y/n").lower()
+            if answer == 'y':
+                self.add_balance(diff)
+                self.my_balance = 0
+                return True
+            else:
+                return False
 
     def add_order(self, count):
-        self.create_order(count)
-        order = {
-            'user_email': self.email,
-            'water quantity': count
-        }
-        order_manager.add_data(order)
+        if self.create_order(count):
+            order = {
+                'user_email': self.email,
+                'water quantity': count
+            }
+            order_manager.add_data(order)
 
     def my_orders(self):
         orders = order_manager.read()
@@ -55,19 +63,11 @@ class User:
         if not packages:
             print("There are no packages yet.")
             return None
-        else:
-            for package in packages:
-                pr = package['package_range']
-                pr = pr.split('-')
-                if count >= int(pr[0]) and count <= int(pr[1]):
-                    return count * package[price]
-                
 
+        for package in packages:
+            pr = package['package_range']
+            pr = pr.split('-')
+            if int(pr[0]) <= count <= int(pr[1]):
+                return count * package['price']
 
-
-user = User('zarina', "zarina@mail.ru")
-
-user_manager.add_data(user.formatting_data())
-user.add_balance(20, 15000)
-user.add_order(15)
-print(user.my_orders(), user.my_balance)
+        return None
