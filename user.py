@@ -1,22 +1,12 @@
 import json
+from file_manager import user_manager, order_manager
 
-from file_manager import JsonManager
-from contextlib import contextmanager
-
-
-@contextmanager
-def custom_open(file_name, mode):
-    file = open(file_name, mode)
-    yield file
-    file.close()
-
-class User(JsonManager):
+class User():
     
     def __init__(self, user_name, email, file_name="users.json"):
         super().__init__(file_name)
         self.user_name = user_name
         self.email = email
-        self.orders = []
         self.my_balance = 0
         self.login = False
 
@@ -30,14 +20,14 @@ class User(JsonManager):
             'user_name': self.user_name,
             'email': self.email,
             'login': self.login,
-            'orders': self.orders
+            'balance': self.my_balance
         }
 
     def add_balance(self, count, price):
         total = count * price
-        print(f"Total price:  {total}")
-        answer = input("Do you wont to add balance?  (Yes or No):  ")
-        if answer == "Yes":
+        print(f"Total price will be:  {total}")
+        answer = input("Do you wont to add balance?  y/n:  ").lower()
+        if answer == "y":
             self.my_balance += count
 
     def create_order(self, count):
@@ -50,7 +40,13 @@ class User(JsonManager):
         if self.create_order(count):
             order = {
                 'user_email': self.email,
-                'count of water': count
+                'water quantity': count
             }
-            with custom_open('orders.json', 'w') as file:
-                json.dump(order, file)
+            order_manager.add_data(order)
+
+    def my_orders(self):
+        orders = order_manager.read()
+
+        for order in orders:
+            if order['user_email'] == self.email:
+                yield order

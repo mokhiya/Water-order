@@ -50,4 +50,6 @@ class JsonManager:
         self.write(updated_data)
         return len(updated_data) < len(all_data)
 
+
 user_manager = JsonManager("users.json")
+order_manager = JsonManager('orders.json')
