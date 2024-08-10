@@ -1,8 +1,11 @@
 from registration import check_user, check_admin, register_user
-from admin import see_all_users, create_water_package, print_package
+from admin import see_all_users, create_water_package, see_all_orders
 
 
 def show_admin_menu():
+    """
+    This function shows the admin menu.
+    """
     while True:
         text = input("""
 1. See all users.
@@ -16,17 +19,22 @@ Choose an option above: """).strip()
             see_all_users()
             return show_admin_menu()
         elif text == '2':
-            pass
+            see_all_orders()
+            return show_admin_menu()
         elif text == '3':
             create_water_package()
             return show_admin_menu()
         elif text == '4':
+            print("You have logged out")
             show_auth_menu()
         else:
             print("Invalid input, try again")
 
 
 def show_user_menu():
+    """
+    This function shows the user menu.
+    """
     text = """
     1. Fill my balance.
     2. Order water.
@@ -50,6 +58,9 @@ def show_user_menu():
 
 
 def show_auth_menu():
+    """
+    This function shows the auth menu.
+    """
     text = """
 1. Register.
 2. Log in.
