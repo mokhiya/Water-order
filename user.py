@@ -1,4 +1,12 @@
 from file_manager import JsonManager
+from contextlib import contextmanager
+
+
+@contextmanager
+def custom_open(file_name, mode):
+    file = open(file_name, mode)
+    yield file
+    file.close()
 
 class User(JsonManager):
     
@@ -29,3 +37,9 @@ class User(JsonManager):
         answer = input("Do you wont to add balance?  (Yes or No):  ")
         if answer == "Yes":
             self.my_balance += count
+
+    def create_order(self, count):
+        if self.my_balance >= count:
+            self.my_balance -= count
+            return True
+        return False
