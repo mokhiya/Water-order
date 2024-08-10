@@ -16,16 +16,31 @@ def register_user():
             print("Invalid input, enter an email again!")
 
     user = User(user_name=user_name, email=user_email)
-
     user.add_data(user.formatting_data())
+    print("Successfully registered!")
     return True
 
 
-def login_user(username, email):
-    all_users = user_manager.read()
+def check_user(username, email):
+    all_users = user_manager.read_data()
     for user in all_users:
         if user['user_name'] == username and user['email'] == email:
+            user['login'] = True
+            user_manager.write_data(all_users)
+            print("Successfully logged in!")
             return True
+    return False
+
+
+admin_login = "admin"
+admin_password = "0000"
+
+
+def check_admin(login, password):
+    if login == admin_login and password == admin_password:
+        #show_admin_menu()
+        return True
+    print("System cannot detect you, please try later or contact admin")
     return False
 
 
