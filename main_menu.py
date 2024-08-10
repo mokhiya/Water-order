@@ -67,8 +67,10 @@ def show_auth_menu():
         username = input("Enter a username: ").strip()
         password_or_email = input("Enter an email or a password: ").strip()
         if check_admin(username=username, password=password_or_email):
+            print("You have successfully logged in.")
             show_admin_menu()
         elif check_user(username=username, email=password_or_email):
+            print("You have successfully logged in.")
             show_user_menu()
         else:
             print("System cannot detect you, please try again!")
