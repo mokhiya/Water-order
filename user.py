@@ -1,3 +1,5 @@
+import json
+
 from file_manager import JsonManager
 from contextlib import contextmanager
 
@@ -43,3 +45,12 @@ class User(JsonManager):
             self.my_balance -= count
             return True
         return False
+
+    def add_order(self, count):
+        if self.create_order(count):
+            order = {
+                'user_email': self.email,
+                'count of water': count
+            }
+            with custom_open('orders.json', 'w') as file:
+                json.dump(order, file)
