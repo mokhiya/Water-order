@@ -1,18 +1,14 @@
 import json
 from file_manager import user_manager, order_manager
 
-class User():
+class User:
     
-    def __init__(self, user_name, email, file_name="users.json"):
-        super().__init__(file_name)
+    def __init__(self, user_name, email):
         self.user_name = user_name
         self.email = email
         self.my_balance = 0
         self.login = False
 
-    def add_order(self, order):
-        """This method is used to add other team members to the list"""
-        self.orders.append(order)
 
     def formatting_data(self):
         """This method is used to format input data in dict format"""
@@ -43,6 +39,8 @@ class User():
                 'water quantity': count
             }
             order_manager.add_data(order)
+        else:
+            print("Your balance is not enough.")
 
     def my_orders(self):
         orders = order_manager.read()
