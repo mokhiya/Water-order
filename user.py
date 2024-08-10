@@ -1,11 +1,10 @@
-import json
-from file_manager import user_manager, order_manager, admin_manager
+from file_manager import order_manager, admin_manager
 
 
 class User:
 
-    def __init__(self, username, email):
-        self.username = username
+    def __init__(self, user_name, email):
+        self.user_name = user_name
         self.email = email
         self.my_balance = 0
         self.login = False
@@ -13,7 +12,7 @@ class User:
     def formatting_data(self):
         """This method is used to format input data in dict format"""
         return {
-            'username': self.username,
+            'username': self.user_name,
             'email': self.email,
             'login': self.login,
             'balance': self.my_balance
@@ -51,7 +50,7 @@ class User:
             order_manager.add_data(order)
 
     def my_orders(self):
-        orders = order_manager.read()
+        orders = order_manager.read_data()
 
         for order in orders:
             if order['user_email'] == self.email:
@@ -59,7 +58,7 @@ class User:
 
     @staticmethod
     def total_price(count):
-        packages = admin_manager.read_data()
+        packages = admin_manager.read_data()['packages']
         if not packages:
             print("There are no packages yet.")
             return None

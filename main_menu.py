@@ -1,5 +1,7 @@
 from registration import check_user, check_admin, register_user
 from admin import see_all_users, create_water_package, see_all_orders
+from user import User
+from file_manager import user_manager
 
 
 def show_admin_menu():
@@ -31,7 +33,7 @@ Choose an option above: """).strip()
             print("Invalid input, try again")
 
 
-def show_user_menu():
+def show_user_menu(user):
     """
     This function shows the user menu.
     """
@@ -46,13 +48,23 @@ def show_user_menu():
     user_input = input("Choose an option above: ").strip()
 
     if user_input == "1":
-        pass
+        print("How many water do you want to add to your balance?")
+        quantity = int(input("Enter an integer:  "))
+        user.add_balance(quantity)
+        user_manager.update_data(user.user_name, 'username', user.formatting_data())
+        show_user_menu(user)
     elif user_input == "2":
-        pass
+        quantity = int(input("How many water would you like to order?"))
+        user.add_order(quantity)
+        user_manager.update_data(user.user_name, 'username', user.formatting_data())
+        show_user_menu(user)
     elif user_input == "3":
-        pass
+        print(list(user.my_orders()))
+        show_user_menu(user)
     elif user_input == "4":
-        pass
+        user.login = False
+        user_manager.update_data(user.user_name, 'username', user.formatting_data())
+        show_auth_menu()
     else:
         print("Invalid input, try again")
 
@@ -78,14 +90,15 @@ def show_auth_menu():
         return show_auth_menu()
 
     elif user_input == "2":
-        username = input("Enter a username: ").strip()
+        username = input("Enter your username: ").strip()
         password_or_email = input("Enter an email or a password: ").strip()
         if check_admin(username=username, password=password_or_email):
             print("You have successfully logged in.")
             show_admin_menu()
         elif check_user(username=username, email=password_or_email):
             print("You have successfully logged in.")
-            show_user_menu()
+            user = User(username, password_or_email)
+            show_user_menu(user)
         else:
             print("System cannot detect you, please try again!")
             show_auth_menu()

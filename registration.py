@@ -9,7 +9,7 @@ def register_user():
     """
     This function is used to register participants
     """
-    user_name = input("Enter your full name: ").strip()
+    user_name = input("Enter a username: ").strip()
 
     while True:  # Validating email format
         user_email = input("Enter your email: ").strip()
@@ -19,14 +19,14 @@ def register_user():
             print("Invalid input, enter an email again!")
 
     user = User(user_name=user_name, email=user_email)
-    user.add_data(user.formatting_data())
+    user_manager.add_data(user.formatting_data())
     return True
 
 
 def check_user(username, email):
     all_users = user_manager.read_data()
     for user in all_users:
-        if user['user_name'] == username and user['email'] == email:
+        if user['username'] == username and user['email'] == email:
             user['login'] = True
             user_manager.write_data(all_users)
             return True
