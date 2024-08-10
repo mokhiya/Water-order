@@ -1,5 +1,6 @@
 from file_manager import JsonManager, admin_manager
 
+
 def see_all_users():
     user_manager = JsonManager("users.json")
     users = user_manager.read_data()
@@ -8,10 +9,19 @@ def see_all_users():
         print("There is no any users")
     else:
         print("\nList of all registered users:")
-        print("Username                 | Email")
-        print("═══════════════════════════════════════════")
+        print("{:<20} {:<30}".format("Ism", "Email"))
+        print("-" * 50)
         for user in users:
-            print(f"{user['user_name']} | {user['email']}")
+            print("{:<20} {:<30}".format(user['user_name'], user['email']))
+
+
+def print_package():
+    data = admin_manager.read_data()
+    print(f"Admin Name: {data['admin_name']}")
+    print("Packages:")
+
+    for package in data['packages']:
+        print(f"  - Range: {package['package_range']}, Price: {package['price']}")
 
 
 def create_water_package():
@@ -33,3 +43,7 @@ def create_water_package():
     }
 
     admin_manager.write_data(admin)
+    print_package()
+
+
+

@@ -1,4 +1,5 @@
 from registration import check_user, check_admin, register_user
+from admin import see_all_users, create_water_package, print_package
 
 
 def show_admin_menu():
@@ -12,11 +13,13 @@ def show_admin_menu():
 Choose an option above: """).strip()
 
         if text == '1':
-            pass
+            see_all_users()
+            return show_admin_menu()
         elif text == '2':
             pass
         elif text == '3':
-            pass
+            create_water_package()
+            return show_admin_menu()
         elif text == '4':
             show_auth_menu()
         else:
@@ -83,7 +86,7 @@ def show_auth_menu():
             return show_auth_menu()
     else:
         print("Choose a proper number! ")
-        return show_admin_menu()
+        return show_auth_menu()
 
 
 if __name__ == '__main__':

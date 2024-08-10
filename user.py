@@ -3,13 +3,12 @@ from file_manager import user_manager, order_manager, admin_manager
 
 
 class User:
-    
+
     def __init__(self, user_name, email):
         self.user_name = user_name
         self.email = email
         self.my_balance = 0
         self.login = False
-
 
     def formatting_data(self):
         """This method is used to format input data in dict format"""
@@ -19,7 +18,6 @@ class User:
             'login': self.login,
             'balance': self.my_balance
         }
-
 
     def add_balance(self, count):
         total = self.total_price(count)
